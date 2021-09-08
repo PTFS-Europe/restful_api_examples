@@ -1,11 +1,14 @@
 #!/bin/bash -e
 #
 # jake deery 2021
-# koha restapi debug scripts - get_patron.sh
+# koha restapi debug scripts - get_all_patron.sh
 #set -x # uncomment to debug
 shopt -s nocasematch # don't match casing, its not necessary
 SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)" # get current script dir portibly
 CONFIG_FILE=${SCRIPT_DIR}/config/config.json # config location
+REQUIRED_ARGS_COUNTER=0 # tracking for successful operation
+MATCHPOINT=''
+VALUE='' # these are set with arguments
 
 
 
@@ -51,11 +54,11 @@ function getToken() { # fetch token from api endpoint
 	return 0
 }
 
-function getAllPatron() { # fetch info on all users
+function getAllPatron() {
 	# vars
 	local locRequestUrl=${CONFIG_ARR[0]}/api/v1/patrons
 
-	#  grab it
+	# grab it
 	fetchString=$(curl -s -H 'Authorization: Bearer '${tokenString} ${locRequestUrl})
 
 	# print it
@@ -70,16 +73,38 @@ function getAllPatron() { # fetch info on all users
 #
 #
 # process
-if [[ $# != 0 ]]; then
-	echo '[E]	Usage: '${0}
+
+#
+# first, handle all arguments
+for (( i=0; i<$#; i++)); do
+	# vars
+	j=$((i+1))
+
+	# --config
+	if [[ ${!i} == '--config' ]]; then
+		if [[ ! -f ${!j} ]]; then
+			echo '[E]	'${!j}' is not a valid file path!'
+			exit 1
+		else
+			CONFIG_FILE=${!j}
+		fi
+	fi
+done
+
+#
+# begin main logic
+echo '[I]	get_all_patron RESTful script, Jake Deery @ PTFS-Europe, 2021'
+if [[ ${REQUIRED_ARGS_COUNTER} != 0 ]]; then # if the wrong number of args are passed
+	echo '[E]	Usage: '${0}' --matchpoint <string> --value <string|int>'
+	echo '[E]	Optional flags:'
+	echo '[E]		--config <file>			The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.'
 	exit 1
 else
-    echo '[I]   Setting up, please allow upto a minute . . . '
+	echo '[I]	Setting up, please allow upto a minute . . . '
 	getConfig # grab our config
 	getToken # grab a token
 	echo '[W]	Using '${CONFIG_ARR[0]}' as our API host, is this correct?'
 	echo '[I]	Our access token is '${tokenString}' . . . '
-	echo ''
 	echo '[I]	Sending request . . . '
 	getAllPatron
 
