@@ -59,7 +59,7 @@ function getToken() { # fetch token from api endpoint
 
 	# parse & catch
 	tokenString=$(echo ${locTokenJson} | jq --raw-output '.access_token')
-	if [[ ${tokenString} == 'null' ]]; then
+	if [[ ${tokenString} == 'null' ]] || [[ -z ${tokenString} ]]; then
 		echo '[E]	No access_token was provided! Check client-id and client-secret in config.json . . . '
 		exit 1
 	fi
