@@ -147,11 +147,11 @@ if [[ ${REQUIRED_ARGS_COUNTER} != 2 ]]; then # if the wrong number of args are p
 	echo '[E]	Usage: '${0}' --patron-id <int> --in <file>'
 	echo
 	echo '[E]	Required flags:'
-	echo '[E]		--patron-id <int>		The internal Koha patron identifier to match against.'
+	echo '[E]		--patron-id <int>	The internal Koha patron identifier to match against.'
 	echo '[E]		--in <file>		What to send. File must be json.'
 	echo
 	echo '[E]	Optional flags:'
-	echo '[E]		--config <file>			The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.'
+	echo '[E]		--config <file>		The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.'
 	exit 1
 else
 	echo '[I]	Setting up, please allow upto a minute . . . '

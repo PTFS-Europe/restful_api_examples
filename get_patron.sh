@@ -147,11 +147,11 @@ if [[ ${REQUIRED_ARGS_COUNTER} != 2 ]]; then # if the wrong number of args are p
 	echo '[E]	Usage: '${0}' --matchpoint <string> --value <string|int>'
 	echo
 	echo '[E]	Required flags:'
-	echo '[E]		--matchpoint <string>		What to lookup against. Possible values are: cardnumber, userid, patron_id'
-	echo '[E]		--value <string|int>		What to lookup using. Max. length 8 chars.'
+	echo '[E]		--matchpoint <string>	What to lookup against. Possible values are: cardnumber, userid, patron_id'
+	echo '[E]		--value <string|int>	What to lookup using. Max. length 8 chars.'
 	echo
 	echo '[E]	Optional flags:'
-	echo '[E]		--config <file>			The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.'
+	echo '[E]		--config <file>		The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.'
 	exit 1
 else
 	echo '[I]	Setting up, please allow upto a minute . . . '

@@ -137,7 +137,7 @@ if [[ ${REQUIRED_ARGS_COUNTER} != 1 ]]; then # if the wrong number of args are p
 	echo '[E]		--in <file>		What to send. File must be json.'
 	echo
 	echo '[E]	Optional flags:'
-	echo '[E]		--config <file>			The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.'
+	echo '[E]		--config <file>		The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.'
 	exit 1
 else
 	echo '[I]	Setting up, please allow upto a minute . . . '
