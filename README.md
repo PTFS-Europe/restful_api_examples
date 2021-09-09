@@ -1,8 +1,8 @@
 # restful_api_examples
 Some example scripts for use with the Koha API.
 
-# Usage
-## add_patron.sh:
+## Usage
+### add_patron.sh:
 ```
 [I]	add_patron RESTful script, Jake Deery @ PTFS-Europe, 2021
 [E]	Usage: ./add_patron.sh --in <file>
@@ -14,7 +14,7 @@ Some example scripts for use with the Koha API.
 [E]		--config <file>			The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.
 ```
 
-## get_patron.sh:
+### get_patron.sh:
 ```
 [I]	get_patron RESTful script, Jake Deery @ PTFS-Europe, 2021
 [E]	Usage: ./get_patron.sh --matchpoint <string> --value <string|int>
@@ -27,7 +27,7 @@ Some example scripts for use with the Koha API.
 [E]		--config <file>			The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.
 ```
 
-## get_all_patron.sh:
+### get_all_patron.sh:
 ```
 [I]	get_all_patron RESTful script, Jake Deery @ PTFS-Europe, 2021
 [E] Usage: ./get_all_patron.sh
@@ -36,7 +36,7 @@ Some example scripts for use with the Koha API.
 [E]		--config <file>			The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.
 ```
 
-## update_patron.sh
+### update_patron.sh
 ```
 [I]	update_patron RESTful script, Jake Deery @ PTFS-Europe, 2021
 [E]	Usage: ./update_patron.sh --patron-id <int> --in <file>
