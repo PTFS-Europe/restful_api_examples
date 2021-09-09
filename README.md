@@ -1,5 +1,5 @@
 # restful_api_examples
-Some example scripts for use with the Koha API. Specifically focused on patron loading 
+Some example scripts for use with the Koha API. Specifically focused on patron loading, updating or deleting.
 
 ## Usage
 ### add_patron.sh:
