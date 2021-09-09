@@ -114,7 +114,7 @@ done
 # begin main logic
 echo '[I]	get_all_patron RESTful script, Jake Deery @ PTFS-Europe, 2021'
 if [[ ${REQUIRED_ARGS_COUNTER} != 0 ]]; then # if the wrong number of args are passed
-	echo '[E]	Usage: '${0}' --matchpoint <string> --value <string|int>'
+	echo '[E]	Usage: '${0}
 	echo '[E]	Optional flags:'
 	echo '[E]		--config <file>			The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.'
 	exit 1
