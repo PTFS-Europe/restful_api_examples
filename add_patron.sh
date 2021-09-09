@@ -105,10 +105,7 @@ function addPatron() {
 	fi
 
 	# grab it
-	fetchString=$(curl -s -X POST -H 'Authorization: Bearer '${locTokenString} -H '' -d @${locFilePath} ${locRequestUrl})
-
-	# print it
-	echo ${fetchString}
+	echo $(curl -s -X POST -H 'Authorization: Bearer '${locTokenString} -H '' -d @${locFilePath} ${locRequestUrl})
 
 	# all is ok
 	return 0
@@ -150,7 +147,6 @@ done
 
 #
 # begin main logic
-echo '[I]	add_patron RESTful script, Jake Deery @ PTFS-Europe, 2021'
 if [[ ${REQUIRED_ARGS_COUNTER} != 1 ]]; then # if the wrong number of args are passed
 	echo '[E]	Usage: '${0}' --in <file>'
 	echo
@@ -161,13 +157,8 @@ if [[ ${REQUIRED_ARGS_COUNTER} != 1 ]]; then # if the wrong number of args are p
 	echo '[E]		--config <file>		The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.'
 	exit 1
 else
-	echo '[I]	Setting up, please allow upto a minute . . . '
 	getConfig # grab our config
 	getToken # grab a token
-	echo '[W]	Using '${CONFIG_ARR[0]}' as our API host, is this correct?'
-	echo '[I]	Our access token is '${TOKEN_STRING}' . . . '
-	echo '[I]	Sending request . . . '
-	addPatron
-	echo '[I]	OK'
+	addPatron # do the add
 
 fi

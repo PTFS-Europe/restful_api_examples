@@ -100,11 +100,8 @@ function getPatron() {
 	local locMatchpointName=${MATCHPOINT}
 	local locMatchpointValue=${VALUE}
 
-	# grab it
-	fetchString=$(curl -s -H 'Authorization: Bearer '${locTokenString} -H 'x-koha-query: {"'${locMatchpointName}'":"'${locMatchpointValue}'"}' ${locRequestUrl})
-
-	# print it
-	echo ${fetchString}
+	# get it
+	echo $(curl -s -H 'Authorization: Bearer '${locTokenString} -H 'x-koha-query: {"'${locMatchpointName}'":"'${locMatchpointValue}'"}' ${locRequestUrl})
 
 	# all is ok
 	return 0
@@ -163,7 +160,6 @@ done
 
 #
 # begin main logic
-echo '[I]	get_patron RESTful script, Jake Deery @ PTFS-Europe, 2021'
 if [[ ${REQUIRED_ARGS_COUNTER} != 2 ]]; then # if the wrong number of args are passed
 	echo '[E]	Usage: '${0}' --matchpoint <string> --value <string|int>'
 	echo
@@ -175,13 +171,8 @@ if [[ ${REQUIRED_ARGS_COUNTER} != 2 ]]; then # if the wrong number of args are p
 	echo '[E]		--config <file>		The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.'
 	exit 1
 else
-	echo '[I]	Setting up, please allow upto a minute . . . '
 	getConfig # grab our config
 	getToken # grab a token
-	echo '[W]	Using '${CONFIG_ARR[0]}' as our API host, is this correct?'
-	echo '[I]	Our access token is '${TOKEN_STRING}' . . . '
-	echo '[I]	Sending request . . . '
-	getPatron
-	echo '[I]	OK'
+	getPatron # do the get
 
 fi

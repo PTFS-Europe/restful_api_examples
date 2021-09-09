@@ -10,7 +10,9 @@ TOKEN_FILE=${SCRIPT_DIR}/token_file
 TOKEN_STRING='' # stores fetched token
 REQUIRED_ARGS_COUNTER=0 # tracking for successful operation
 MATCHPOINT=''
-VALUE='' # these are set with arguments
+VALUE=''
+PAGE_NO='1'
+PAGE_COUNT='20' # these are set with arguments
 
 
 
@@ -96,13 +98,12 @@ function getToken() { # fetch token from api endpoint
 function getAllPatron() {
 	# vars
 	local locTokenString=${TOKEN_STRING}
-	local locRequestUrl=${CONFIG_ARR[0]}/api/v1/patrons
+	local locPageNo=${PAGE_NO}
+	local locPageCount=${PAGE_COUNT}
+	local locRequestUrl=${CONFIG_ARR[0]}'/api/v1/patrons?_page='${locPageNo}'&_per_page='${locPageCount}
 
-	# grab it
-	fetchString=$(curl -s -H 'Authorization: Bearer '${locTokenString} ${locRequestUrl})
-
-	# print it
-	echo ${fetchString}
+	# get it
+	echo $(curl -s -X GET -H 'Authorization: Bearer '${locTokenString} ${locRequestUrl})
 
 	# all is ok
 	return 0
@@ -129,24 +130,39 @@ for (( i=0; i<$#; i++)); do
 			CONFIG_FILE=${!j}
 		fi
 	fi
+
+	# --page
+	if [[ ${!i} == '--page' ]]; then
+		if [[ ${!j} =~ '^-?[0-9]+$' ]]; then
+			echo '[E]	'${!j}' is not an integer!'
+			exit 1
+		else
+			PAGE_NO=${!j}
+		fi
+	fi
+
+	# --per-page
+	if [[ ${!i} == '--per-page' ]]; then
+		if [[ ${!j} =~ '^-?[0-9]+$' ]]; then
+			echo '[E]	'${!j}' is not an integer!'
+			exit 1
+		else
+			PAGE_COUNT=${!j}
+		fi
+	fi
 done
 
 #
 # begin main logic
-echo '[I]	get_all_patron RESTful script, Jake Deery @ PTFS-Europe, 2021'
 if [[ ${REQUIRED_ARGS_COUNTER} != 0 ]]; then # if the wrong number of args are passed
 	echo '[E]	Usage: '${0}
 	echo '[E]	Optional flags:'
 	echo '[E]		--config <file>			The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.'
+	echo '[E]		--page <int>				The page to lookup. Will default to '${PAGE_NO}' if unspecified.'
+	echo '[E]		--per-page <int>		The number of results per page. Will default to '${PAGE_COUNT}' if unspecified.'
 	exit 1
 else
-	echo '[I]	Setting up, please allow upto a minute . . . '
 	getConfig # grab our config
 	getToken # grab a token
-	echo '[W]	Using '${CONFIG_ARR[0]}' as our API host, is this correct?'
-	echo '[I]	Our access token is '${TOKEN_STRING}' . . . '
-	echo '[I]	Sending request . . . '
-	getAllPatron
-	echo '[I]	OK'
-
+	getAllPatron # get all patrons
 fi
