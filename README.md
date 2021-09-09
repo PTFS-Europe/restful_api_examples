@@ -1,5 +1,5 @@
 # restful_api_examples
-Some example scripts for use with the Koha API.
+Some example scripts for use with the Koha API. Specifically focused on patron loading 
 
 ## Usage
 ### add_patron.sh:
@@ -12,6 +12,18 @@ Some example scripts for use with the Koha API.
 
 [E]	Optional flags:
 [E]		--config <file>         The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.
+```
+
+### delete_patron.sh:
+```
+[I]	delete_patron RESTful script, Jake Deery @ PTFS-Europe, 2021
+[E]	Usage: ./delete_patron.sh --patron-id <int>
+
+[E]	Required flags:
+[E]		--patron-id <int>       The internal Koha patron identifier to match against.
+
+[E]	Optional flags:
+[E]		--config <file>		      The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.
 ```
 
 ### get_patron.sh:
