@@ -23,7 +23,7 @@ Some example scripts for use with the Koha API. Specifically focused on patron l
 [E]		--patron-id <int>       The internal Koha patron identifier to match against.
 
 [E]	Optional flags:
-[E]		--config <file>		      The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.
+[E]		--config <file>         The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.
 ```
 
 ### get_patron.sh:
