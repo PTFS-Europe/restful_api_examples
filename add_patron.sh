@@ -7,7 +7,7 @@ shopt -s nocasematch # don't match casing, its not necessary
 SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)" # get current script dir portibly
 CONFIG_FILE=${SCRIPT_DIR}/config/config.json # config location
 REQUIRED_ARGS_COUNTER=0 # tracking for successful operation
-PAYLOAD=''
+PAYLOAD='' # this is set with arguments
 
 
 
@@ -15,6 +15,9 @@ PAYLOAD=''
 #
 # functions
 function getConfig() { # fetch config values from file
+	# vars
+	local locConfigJson=$(cat ${CONFIG_FILE})
+
 	# check its a json file -- dumb check
 	if [[ ${CONFIG_FILE} != *.json ]]; then
 		echo '[E]	That is not a json file!'
@@ -25,9 +28,6 @@ function getConfig() { # fetch config values from file
 		echo '[E]	Config file does not exist at '${CONFIG_FILE}' . . . '
 		exit 1
 	fi
-
-	# vars
-	local locConfigJson=$(cat ${CONFIG_FILE})
 
 	# get each item into the array
 	CONFIG_ARR+=( $(echo ${locConfigJson} | jq --raw-output '."staff-client-url"') )
