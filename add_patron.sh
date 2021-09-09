@@ -26,8 +26,22 @@ function getConfig() { # fetch config values from file
 
 	# get each item into the array
 	CONFIG_ARR+=( $(echo ${locConfigJson} | jq --raw-output '."staff-client-url"') )
+	if [[ ${CONFIG_ARR[0]} == null ]]; then # check our work
+		echo '[E]	Config key staff-client-url is missing, even though its required!'
+		exit 1
+	fi
+
 	CONFIG_ARR+=( $(echo ${locConfigJson} | jq --raw-output '."client-id"') )
+	if [[ ${CONFIG_ARR[0]} == null ]]; then # check our work
+		echo '[E]	Config key staff-client-url is missing, even though its required!'
+		exit 1
+	fi
+
 	CONFIG_ARR+=( $(echo ${locConfigJson} | jq --raw-output '."client-secret"') )
+	if [[ ${CONFIG_ARR[0]} == null ]]; then # check our work
+		echo '[E]	Config key staff-client-url is missing, even though its required!'
+		exit 1
+	fi
 
 	# all is ok
 	return 0
