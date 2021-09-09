@@ -74,6 +74,7 @@ function getToken() { # fetch token from api endpoint
 		else
 			# not-duff response goes in the token_file for reuse later on
 			echo ${TOKEN_STRING} > ${locTokenFile}
+			chmod 0600 ${locTokenFile}
 		fi
 	else
 		# the existing token isn't stale -- reuse it

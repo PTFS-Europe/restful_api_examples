@@ -79,6 +79,7 @@ function getToken() { # fetch token from api endpoint
 	else
 		# the existing token isn't stale -- reuse it
 		TOKEN_STRING=$(cat ${locTokenFile})
+		chmod 0600 ${locTokenFile}
 	fi
 
 	# token should always be 88 chars
