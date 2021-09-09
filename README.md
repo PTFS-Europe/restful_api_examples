@@ -2,7 +2,7 @@
 Some example scripts for use with the Koha API. Specifically focused on patron loading, updating or deleting.
 
 ## Before use
-* Make sure you populate the config/config.json file with the required attributes, otherwise the script won't be able to get a token.
+* Make sure you populate the *config/config.json* file with the required attributes, otherwise the script won't be able to get a token.
 * Also, make sure the Koha syspref *RESTOAuth2ClientCredentials*  is enabled, and an API key has been created under a Librarian patron
 * Also, make sure CPAN module *Net::OAuth2::AuthorizationServer* is installed. Restart plack if required.
 * Lastly, make sure *CGIPassAuth On* is set under the */api* alias in Apache httpd, otherwise you will get a 401 Unauthorised response.
