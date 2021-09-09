@@ -137,7 +137,7 @@ done
 
 #
 # begin main logic
-echo '[I]	add_patron RESTful script, Jake Deery @ PTFS-Europe, 2021'
+echo '[I]	update_patron RESTful script, Jake Deery @ PTFS-Europe, 2021'
 if [[ ${REQUIRED_ARGS_COUNTER} != 2 ]]; then # if the wrong number of args are passed
 	echo '[E]	Usage: '${0}' --patron-id <int> --in <file>'
 	echo
