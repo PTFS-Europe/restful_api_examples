@@ -6,6 +6,8 @@
 shopt -s nocasematch # don't match casing, its not necessary
 SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)" # get current script dir portibly
 CONFIG_FILE=${SCRIPT_DIR}/config/config.json # config location
+TOKEN_FILE=${SCRIPT_DIR}/token_file
+TOKEN_STRING='' # stores fetched token
 REQUIRED_ARGS_COUNTER=0 # tracking for successful operation
 PAYLOAD='' # this is set with arguments
 
@@ -57,14 +59,31 @@ function getToken() { # fetch token from api endpoint
 	local locRequestUrl=${CONFIG_ARR[0]}/api/v1/oauth/token
 	local locClientId=${CONFIG_ARR[1]}
 	local locClientSecret=${CONFIG_ARR[2]}
+	local locTokenFile=${TOKEN_FILE}
 
-	# fetch
-	local locTokenJson=$(curl -s -X POST -F grant_type=client_credentials -F client_id=${locClientId} -F client_secret=${locClientSecret} ${locRequestUrl})
+	# test to see if the file exists or its stale
+	if ! test -f ${locTokenFile} || test "`find ${locTokenFile} -mmin +45`"; then
+		# fetch token from api
+		local locTokenJson=$(curl -s -X POST -F grant_type=client_credentials -F client_id=${locClientId} -F client_secret=${locClientSecret} ${locRequestUrl})
 
-	# parse & catch
-	tokenString=$(echo ${locTokenJson} | jq --raw-output '.access_token')
-	if [[ ${tokenString} == 'null' ]] || [[ -z ${tokenString} ]]; then
-		echo '[E]	No access_token was provided! Check client-id and client-secret in config.json . . . '
+		# parse & catch duff responses
+		TOKEN_STRING=$(echo ${locTokenJson} | jq --raw-output '.access_token')
+		if [[ ${TOKEN_STRING} == 'null' ]] || [[ -z ${TOKEN_STRING} ]]; then
+			echo '[E]	No access_token was provided! Check client-id and client-secret in config.json . . . '
+			exit 1
+		else
+			# not-duff response goes in the token_file for reuse later on
+			echo ${TOKEN_STRING} > ${locTokenFile}
+		fi
+	else
+		# the existing token isn't stale -- reuse it
+		TOKEN_STRING=$(cat ${locTokenFile})
+	fi
+
+	# token should always be 88 chars
+	if [[ ${#TOKEN_STRING} != 88 ]]; then
+		echo '[E]	Token is malformed or invalid! Please rerun this script'
+		rm ${locTokenFile}
 		exit 1
 	fi
 
@@ -74,6 +93,7 @@ function getToken() { # fetch token from api endpoint
 
 function addPatron() {
 	# vars
+	local locTokenString=${TOKEN_STRING}
 	local locRequestUrl=${CONFIG_ARR[0]}/api/v1/patrons
 	local locFilePath=${PAYLOAD}
 
@@ -84,7 +104,7 @@ function addPatron() {
 	fi
 
 	# grab it
-	fetchString=$(curl -s -X POST -H 'Authorization: Bearer '${tokenString} -H '' -d @${locFilePath} ${locRequestUrl})
+	fetchString=$(curl -s -X POST -H 'Authorization: Bearer '${locTokenString} -H '' -d @${locFilePath} ${locRequestUrl})
 
 	# print it
 	echo ${fetchString}
@@ -144,7 +164,7 @@ else
 	getConfig # grab our config
 	getToken # grab a token
 	echo '[W]	Using '${CONFIG_ARR[0]}' as our API host, is this correct?'
-	echo '[I]	Our access token is '${tokenString}' . . . '
+	echo '[I]	Our access token is '${TOKEN_STRING}' . . . '
 	echo '[I]	Sending request . . . '
 	addPatron
 	echo '[I]	OK'
