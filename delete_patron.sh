@@ -141,5 +141,6 @@ else
 	echo '[I]	Our access token is '${tokenString}' . . . '
 	echo '[I]	Sending request . . . '
 	deletePatron
+	echo '[I]	OK'
 
 fi

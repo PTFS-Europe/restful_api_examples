@@ -161,5 +161,6 @@ else
 	echo '[I]	Our access token is '${tokenString}' . . . '
 	echo '[I]	Sending request . . . '
 	updatePatron
+	echo '[I]	OK'
 
 fi

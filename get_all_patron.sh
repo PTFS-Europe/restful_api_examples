@@ -126,5 +126,6 @@ else
 	echo '[I]	Our access token is '${tokenString}' . . . '
 	echo '[I]	Sending request . . . '
 	getAllPatron
+	echo '[I]	OK'
 
 fi
