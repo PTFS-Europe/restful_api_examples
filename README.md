@@ -30,7 +30,7 @@ Some example scripts for use with the Koha API.
 ### get_all_patron.sh:
 ```
 [I]	get_all_patron RESTful script, Jake Deery @ PTFS-Europe, 2021
-[E] Usage: ./get_all_patron.sh
+[E]	Usage: ./get_all_patron.sh
 
 [E]	Optional flags:
 [E]		--config <file>			The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.
