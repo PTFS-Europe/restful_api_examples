@@ -99,8 +99,8 @@ function deletePatron() {
 	local locRequestUrl=${CONFIG_ARR[0]}/api/v1/patrons/${PATRON_ID}
 
 	# put it
-	echo -n $(curl -s -X DELETE -H 'Authorization: Bearer '${locTokenString} -H '' ${locRequestUrl})
-	echo '{"error":"Patron deleted sucessfully"}' # just to tell a watching program all is good
+	echo $(curl -s -X DELETE -H 'Authorization: Bearer '${locTokenString} -H '' ${locRequestUrl})
+	# note: no news is ood news
 
 	# all is ok
 	return 0
