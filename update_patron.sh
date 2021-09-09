@@ -16,6 +16,11 @@ PAYLOAD=''
 #
 # functions
 function getConfig() { # fetch config values from file
+	# check its a json file -- dumb check
+	if [[ ${CONFIG_FILE} != *.json ]]; then
+		echo '[E]	That is not a json file!'
+		exit 1
+	fi
 	# check file exists
 	if [[ ! -f ${CONFIG_FILE} ]]; then
 		echo '[E]	Config file does not exist at '${CONFIG_FILE}' . . . '
