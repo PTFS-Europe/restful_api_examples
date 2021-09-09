@@ -52,6 +52,8 @@ Some example scripts for use with the Koha API. Specifically focused on patron l
 
 [E]	Optional flags:
 [E]		--config <file>         The json file used to configure this script. Will default to <script-dir>/config/config.json if unspecified.
+[E]		--page <int>            The page to lookup. Will default to 1 if unspecified.
+[E]		--per-page <int>        The number of results per page. Will default to 20 if unspecified.
 ```
 
 ### update_patron.sh
